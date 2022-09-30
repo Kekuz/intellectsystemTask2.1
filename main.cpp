@@ -6,15 +6,18 @@ using namespace std;
 
 int main()
 {
-    int start = 2;
-    int finish = 100;
+    int start;
+    int finish;
     int taskNum;
 
-    cout << "1. Прямой поиск\n2. Обратный поиск" << endl;
+    cout << "1. Direct search\n2. Reverse search" << endl;
     cin >> taskNum;
-    cout << "Введите начальное и конечное число: " << endl;
+    cout << "Enter the start and end number: " << endl;
+    cin >> start >> finish;
+
     clock_t s, f;
     State* test;
+
     s = clock(); // Метка начала
     if (taskNum == 1){
         test = Algorithm(start, finish);

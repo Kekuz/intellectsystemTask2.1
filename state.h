@@ -3,13 +3,12 @@
 
 enum Action
 {
-    NONE,
+    NONE,// Для корня
     Inc3,
     Mult2,
     Dec2,
-    Div2,
-    Dec3,
-    Inc2,
+    Div2,//Для обратного алгоритма
+    Dec3,//Для обратного алгоритма
 };
 
 
@@ -25,7 +24,7 @@ struct State
     }
 };
 
-void PrintPath(State* uZel);
+void PrintPath(State* elem);
 
 State* Algorithm(int start, int end);
 

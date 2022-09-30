@@ -1,18 +1,25 @@
 #include <iostream>
 #include<unordered_set>
 #include <queue>
-#include <vector>
+#include<vector>
+#include <algorithm>
 #include "State.h"
 using namespace std;
 
-void PrintPath(State* uZel) {
+void PrintPath(State* elem) {
     int count = 0;
-    while (uZel != nullptr) {
-        cout << uZel->data << " -> ";
-        uZel = uZel->par;
+    vector<int> e;
+    while (elem != nullptr) {
+        e.push_back(elem->data);
+        elem = elem->par;
         count++;
     }
-    cout << "\nКоличество операций: " << count-1 << endl;
+    reverse(e.begin(), e.end());
+    for (int i = 0; i < e.size() - 1; ++i) {
+        cout << e[i] << "->";
+    }
+    cout << e[e.size() - 1];
+    cout << "\nNumber of operations: " << count-1 << endl;
 }
 
 
@@ -29,13 +36,15 @@ State* Algorithm(int start, int end) {
             return cur;
         State* left = new State(cur->data * 2, cur, Mult2); // * 2
         State* right = new State(cur->data + 3, cur, Inc3); // + 3
+        //State* middle = new State(cur->data - 2, cur, Dec2); // - 2
+        //if (set.find(middle->data) == set.end()) q.push(middle);
         if (set.find(left->data) == set.end()) q.push(left);
         if (set.find(right->data) == set.end()) q.push(right);
 
         set.insert(left->data);
         set.insert(right->data);
+        //set.insert(middle->data);
     }
-    return nullptr;
 }
 
 // Обратный поиск
@@ -61,5 +70,4 @@ State* AlgorithmReverse(int start, int end) {
         if (set.find(right->data) == set.end()) q.push(right);
         set.insert(right->data);
     }
-    return nullptr;
 }
