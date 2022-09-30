@@ -1,20 +1,34 @@
-#ifndef UNTITLED_STATE_H
-#define UNTITLED_STATE_H
-#include <iostream>
-using namespace std;
+#ifndef LAB2_STATE_H
+#define LAB2_STATE_H
 
-class state{
-public:
-    int value;
-    string operation;
-    state* parent;
-    state(int value, string operation = "", state* parent = nullptr)
-    {
-        this-> value = value;
-        this-> operation = operation;
-        this-> parent = parent;
-    }
+enum Action
+{
+    NONE,
+    Inc3,
+    Mult2,
+    Dec2,
+    Div2,
+    Dec3,
+    Inc2,
 };
 
 
-#endif //UNTITLED_STATE_H
+struct State
+{
+    int data;
+    State* par;
+    Action act;
+    State(int value, State* parent, Action action) {
+        data = value;
+        par = parent;
+        act = action;
+    }
+};
+
+void PrintPath(State* uZel);
+
+State* Algorithm(int start, int end);
+
+State* AlgorithmReverse(int start, int end);
+
+#endif //LAB2_STATE_H

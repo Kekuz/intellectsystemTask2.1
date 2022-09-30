@@ -1,74 +1,29 @@
 #include <iostream>
-#include <set>
-#include <vector>
-#include "state.h"
-#include <algorithm>
+#include <ctime>
+#include "State.h"
 
 using namespace std;
 
-state find_leaf(int a, int b){
-    vector <state> leafs = {state(a)};
-    set<int> seen;
+int main()
+{
+    int start = 2;
+    int finish = 100;
+    int taskNum;
 
-    while (true){
-        vector <state> new_leafs = {};
-
-
-        for(auto i : leafs)
-        {
-            auto cur_value = i.value * 2;
-            if (seen.find(cur_value) == seen.end() && cur_value <= b){
-                new_leafs.push_back(state(cur_value, "*2", &i));
-                seen.insert(cur_value);
-            }
-            if (cur_value == b){
-                cout<<"Visited nodes count: "<< seen.size()<<endl;
-                return new_leafs.back();
-            }
-
-            cur_value = i.value + 3;
-            if (seen.find(cur_value) == seen.end()){
-                new_leafs.push_back(state(cur_value, "+3", &i));
-                seen.insert((cur_value));
-            }
-            if (cur_value == b){
-                cout<<"Visited nodes count: "<< seen.size()<<endl;
-                return new_leafs.back();
-            }
-        }
-        leafs = new_leafs;
+    cout << "1. Прямой поиск\n2. Обратный поиск" << endl;
+    cin >> taskNum;
+    cout << "Введите начальное и конечное число: " << endl;
+    clock_t s, f;
+    State* test;
+    s = clock(); // Метка начала
+    if (taskNum == 1){
+        test = Algorithm(start, finish);
     }
-}
-
-vector<state> find_seq(state leaf){
-    vector <state> seq = {leaf};
-    auto cur = &leaf;
-    while (true){
-        state* parent = cur->parent;
-        if (parent == nullptr){
-            reverse(seq.begin(), seq.end());
-            return seq;
-        }
-        seq.push_back(*parent);
-        cur = parent;
+    else if (taskNum == 2){
+        test = AlgorithmReverse(finish, start);
     }
-}
-
-
-int main() {
-    int a = 2;
-    int b = 100;
-    cout << "Imput a: " << endl;
-    //cin >> a;
-    cout << "Imput b: " << endl;
-    //cin >> b;
-
-    auto leaf = find_leaf(a,b);
-    auto op_seq = find_seq(leaf);
-
-    for (auto x: op_seq){
-        cout << x.value << endl;
-    }
-    cout << op_seq.size() << endl;
-
+    else return 0;
+    f = clock(); // Метка конца
+    cout << ((f - s) / CLOCKS_PER_SEC) << " sec. " << endl;
+    PrintPath(test);
 }
